@@ -1,0 +1,11 @@
+.git
+.opencode
+.env
+.env.*
+.venv
+venv
+**/__pycache__
+**/*.pyc
+data/source
+AGENTS.md
+opencode.json

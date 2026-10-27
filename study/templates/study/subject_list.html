@@ -1,0 +1,25 @@
+{% extends "study/base.html" %}
+
+{% block content %}
+<section class="intro">
+    <p class="eyebrow">Самостоятельная подготовка</p>
+    <h1>Что будем повторять?</h1>
+    <p class="lead">Выберите предмет, обдумайте случайный вопрос и сравните свой ответ с готовым объяснением.</p>
+</section>
+<section class="subject-grid" aria-label="Предметы для подготовки">
+    {% for subject in subjects %}
+    <article class="subject-card">
+        <p class="eyebrow">Учебные карточки</p>
+        <h2>{{ subject.name }}</h2>
+        <p class="muted">Карточек: {{ subject.card_count }}</p>
+        {% if not subject.card_count %}<p class="muted">Материалы пока не добавлены.</p>{% endif %}
+        <a class="button button-primary" href="{% url 'study:practice' slug=subject.slug %}">Начать подготовку <span aria-hidden="true">→</span></a>
+    </article>
+    {% empty %}
+    <div class="empty-state">
+        <h2>Пока нет предметов</h2>
+        <p>Материалы ещё не добавлены. Администратор может создать предмет и импортировать карточки.</p>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

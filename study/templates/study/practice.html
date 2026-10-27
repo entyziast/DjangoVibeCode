@@ -1,0 +1,44 @@
+{% extends "study/base.html" %}
+
+{% block title %}{{ subject.name }} · Подготовка{% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="Навигация"><a href="{% url 'study:subjects' %}">← Все предметы</a></nav>
+<section class="practice-heading">
+    <p class="eyebrow">Подготовка к экзамену</p>
+    <h1>{{ subject.name }}</h1>
+    <p class="lead">Сначала попробуйте ответить самостоятельно. Откройте объяснение, когда будете готовы.</p>
+</section>
+{% if card %}
+<article class="question-card">
+    <div class="card-meta"><span class="topic">{{ card.topic }}</span><span class="card-id">{{ card.id }}</span></div>
+    <p class="eyebrow">Вопрос</p>
+    <h2 class="question-text preserve-lines">{{ card.question }}</h2>
+    <details class="answer">
+        <summary><span class="show-label">Показать ответ</span><span class="hide-label">Скрыть ответ</span></summary>
+        <div class="answer-body">
+            <h3>Готовый ответ</h3>
+            <div class="answer-text preserve-lines">{{ card.answer }}</div>
+            <p class="source preserve-lines"><strong>Источник:</strong> {{ card.source_ref }}</p>
+        </div>
+    </details>
+    <div class="card-actions">
+        <form action="{% url 'study:practice' slug=subject.slug %}" method="get">
+            <input type="hidden" name="current" value="{{ card.id }}">
+            <button class="button button-primary" type="submit">Следующий вопрос <span aria-hidden="true">→</span></button>
+        </form>
+        {% if card_count == 1 %}
+        <p class="muted">Пока доступна одна карточка. Кнопка откроет её снова со скрытым ответом.</p>
+        {% else %}
+        <p class="muted">Случайный выбор без повтора текущего вопроса.</p>
+        {% endif %}
+    </div>
+</article>
+{% else %}
+<section class="empty-state">
+    <h2>Вопросов пока нет</h2>
+    <p>Для этого предмета ещё не добавлены карточки. После импорта материалов здесь можно будет начать подготовку.</p>
+    <a class="button button-secondary" href="{% url 'study:subjects' %}">Вернуться к предметам</a>
+</section>
+{% endif %}
+{% endblock %}

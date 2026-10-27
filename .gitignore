@@ -1,1 +1,16 @@
 data/source/
+
+# Локальные секреты (шаблон настроек оставляем в репозитории).
+.env
+.env.*
+!.env.example
+.secrets/
+
+# Python и локальные инструменты.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.log
